@@ -56,6 +56,19 @@
 - 2. Right is moved n positions away from left.
 - 3. To get the node prev to the node to delete, maintain a dummy pointer at the start.
 
+## Find Cycles in Linkee List
+- Floyd's Tortoise and hare technique. Maintain a fast and slow pointer.
+- They eventually meet. Time taken to meet is the distance between the fast and slow pointers.
+- If there are 10 steps between F and S, then they meet in 10 steps.
+- Time complexity: O(n), Space: O(1)
+
+## Copy List With Random pointer
+- Problem: Singly linked list with a random pointer either null or pointing to other node or itself. Perform deepcopy.
+- 1. Perform 2 passes. 
+- 2. Maintain hashmap of old nodes and new nodes. 
+- 3. In first pass copy single linked list, store old and new nodes into HM.
+- 4. In second pass, refer the HM and map to new node.
+
 ## LRU Cache
 - Problem: LRU Cache limited to a capacity. Evict using LRU policy. Implement get() and set(). Both operations should be in O(1)
 - Double linked list of nodes. Head points to MRU and tail points to LRU. Only DLL will yield O(n) 
@@ -73,6 +86,7 @@
         -      e) Add entry to hm
 
 
+## Find the Duplicate Number
 
 # Intervals
 
@@ -175,6 +189,16 @@
 - Insert Closed brace when `closedVal < openVal`
 - Pop last char from stack after backtrack call (to clear the global string for each subtree path)
 
+## Reverse Polish Notation Expression Evaluation
+- Problem: Given a valid expression in RPN string array, using only operators +,-,*,/ evaluate the expression.
+- Use stack DS. Parse each token and use Integer.parseInt within try-catch. Catch for NumberFormatException
+- If string parsed to int, push to stack. If not, pop 2 operands from stack, evaluate for operator and push result.
+- Final answer is in stack. Return it.
+
+## Implement Min Stack
+- Problem: Implement stack operations. Also implement getMin() returning min value. All operations must be in O(1)
+- Maintain 2 stacks. One for operations another for min value until that point. 
+
 # Trees
 ## Level order
 - Problem: Given a binary tree, return list of entries in each level.
@@ -220,6 +244,8 @@
 - Maintain a max = 0 to track max diameter. max = max (max, nodediameter)
 - IMPORTANT: in base case, return -1 instead of 0 for the diameter math to workout.
 
+## Maximum Depth of Binary Tree
+
 ## Is Valid BST
 - Problem: BST: all entries in left subtree is < node.val < all entries in right subtree.
 - Problem: Given root, find if it is a BST.
@@ -234,7 +260,6 @@
  - Do in-order BST. Maintain a count during traversal. Return element once count is reached.
  - Track count and min outside of recursive function.
 
-
 ## Find Lowest Common Ancestor
 - Problem: Find lowest common ancestor, given 2 values; p, q.
 - Run preorder DFS and solve distint cases.
@@ -243,8 +268,35 @@
 - Case 3: If p or q < node.val, there is a split. One of them is in right subtree. So return node as lca.
 - Case 4: If p or q = node.val, return node as lca.
 
+## Construct Binary Tree From Inorder and Preorder traversals
+
+## Nary-Tree Preorder Traversal
+
+
+# Heap/Priority Queue
+
+## Find Kth Largest Element
+- Problem: Find Kth largest element not Kth distinct element in a stream. Implement constructor and add()
+- Use MinHeap. Complete binary tree. Root always contains min value. nth layer is always less than n+1 and so on.
+- Minheap: In array representation, Left child: (2k+1), Right child: (2k+2), parent is at (k-1)/2 
+- In Java, implemented via PritorityQueue DS. pq.add () -> Insert, pq.poll() -> remove, pq.peek() -> get min without remove
+- PQ DS is unbounded. So, QSIZE has to be explicitly maintained. Set QSIZE = k 
+
+- Note: To find KthSmallestElement. Use MaxHeap DS.
+- In java, same PQ is used. In Constructor pass new PriorityQueue<>(Collections.reverseOrder()) to make min to maxheap.
+
+## Design Twitter
+- Problem: Design twitter LLD.
+- Key ideas: Maintain a global timestamp across tweets from different users. And increment in post call.
+- User PriorityQueue to tweets based on timestamps across users and his followers.
+- While constructing newsfeed, use MaxHeap.
+- class TweetTimePair {tweetId, timestamp}, 
+- class User {Set<FollowerId>, List<TweetTimePair>, PriorityQueue<TweetTimePair> pq; }
+- class Twitter { int globaltime = 0; Map<Integer, User> uMap;}
+- Java: Use a comparator to compare timestamp for PQ. This comparator makes it a maxheap instead of default minheap.
 
 # Bit operations
+
 ## Missing numbers
 - Problem: Find missing no. between [0,n].
 - Two solutions: 
